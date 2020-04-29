@@ -1,0 +1,17 @@
+{
+	"en": {
+		"welcome": "Welcome to calculator",
+		"first": "What is the first number",
+		"second": "What is the second number",
+		"invalid": "That is an invalid number",
+		"operation": "What operation would you like to perform:",
+		"options": "1) Add\n2) Substract\n3) Multiply\n4) Divide",
+		"choose": "You need to choose 1, 2, 3, or 4",
+		"result": "The result is: ",
+		"repeat": {
+			"prompt": "Would you like to perform another calculation?",
+			"options": "y/n or yes/no",
+			"invalid": "Please give a valid answer: y/n or yes/no"
+		}
+	}
+}
