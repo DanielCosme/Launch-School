@@ -5,10 +5,5 @@ console.log(isOdd(0)); // => false
 console.log(isOdd(7)); // => true
 
 function isOdd(integer) {
-	let value = Math.abs(integer);
-	let result = true;
-	if (value % 2 === 0) {
-		result = false;
-	}
-	return result;
+	return Math.abs(integer) % 2 === 1;
 }
