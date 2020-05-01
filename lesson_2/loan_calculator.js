@@ -37,31 +37,31 @@ prompt(`Your monthly payment is: ${formatMoney(monthlyPayment.toFixed(2))}`);
 // Function declaration/implementations
 
 function prompt(message) {
-	console.log(`==>  ${message}`);
+  console.log(`==>  ${message}`);
 }
 
 function formatMoney(money) {
-	return "$" + money;
+  return "$" + money;
 }
 
 function formatPercentage(percentage) {
-	return "% " + percentage;
+  return "% " + percentage;
 }
 
 function isInvalidNumber(number) {
-	return (
-		Number.isNaN(Number(number)) ||
+  return (
+    Number.isNaN(Number(number)) ||
 		number.trimStart() === "" ||
 		Number(number) <= 0
-	);
+  );
 }
 
 function checkForValidInput() {
-	let tmp = readline.question();
+  let tmp = readline.question();
 
-	while (isInvalidNumber(tmp)) {
-		prompt("Invalid input please try again");
-		tmp = readline.question();
-	}
-	return tmp;
+  while (isInvalidNumber(tmp)) {
+    prompt("Invalid input please try again");
+    tmp = readline.question();
+  }
+  return tmp;
 }
