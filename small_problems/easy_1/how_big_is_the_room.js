@@ -11,21 +11,61 @@ Enter the length of the room in meters:
 Enter the width of the room in meters:
 7
 The area of the room is 70.00 square meters (753.47 square feet).
+
+
+Further Exploration
+
+Modify the program so that it asks the user for the input type (meters or feet). Compute for the area accordingly, and log it and its conversion in parentheses.
 */
 
 const readline = require("readline-sync");
+const SQUARE_METERS_TO_SQUARE_FEET = 10.7639;
+const SQUARE_FEET_TO_SQUARE_METERS = 0.093;
 
-console.log("Enter the length of the room in meters:");
-let length = readline.prompt();
+console.log("Would you like to get the are in meters or feet m/f");
+let mainChoice = "meters";
+let secondaryChoice = "feet";
+let choice = readline.prompt();
 
-console.log("Enter the width of the room in meters:");
-let width = readline.prompt();
+while (true) {
+	if (!(choice[0] === "m" || choice[0] === "f")) {
+		console.log(`Invalid input, please try again...`);
+		choice = readline.prompt();
+		continue;
+	}
+	break;
+}
 
-let areaInMeters = length * width;
-let areaInSquareFeet = areaInMeters * 10.7639;
+if (choice[0] === "f") {
+	mainChoice = "feet";
+	secondaryChoice = "meters";
+}
+
+console.log(`Enter the length of the room in ${mainChoice}`);
+let length = Number.parseInt(readline.prompt());
+
+console.log(`Enter the width of the room in ${mainChoice}`);
+let width = Number.parseInt(readline.prompt());
+
+let mainArea = length * width;
+let secondaryArea = fromMetersToFeet(mainArea);
+
+if (choice[0] === "f") {
+	secondaryArea = fromFeetToMeters(mainArea);
+}
 
 console.log(
-	`The area of the room is ${areaInMeters.toFixed(
+	`The area of the room is ${mainArea.toFixed(
 		2
-	)} square meters (${areaInSquareFeet.toFixed(2)} square feet).`
+	)} square ${mainChoice} (${secondaryArea.toFixed(
+		2
+	)} square ${secondaryChoice}).`
 );
+
+function fromMetersToFeet(meters) {
+	return meters * SQUARE_METERS_TO_SQUARE_FEET;
+}
+
+function fromFeetToMeters(fee) {
+	return SQUARE_FEET_TO_SQUARE_METERS / fee;
+}
