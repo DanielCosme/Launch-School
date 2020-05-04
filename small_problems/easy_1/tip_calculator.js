@@ -25,5 +25,5 @@ let tipRate = Number.parseFloat(readline.prompt());
 let tipAmount = (tipRate / 100) * billAmount;
 let totalBill = billAmount + tipAmount;
 
-console.log(`Your tip is: ${tipAmount}`);
-console.log(`Your total bill is: ${totalBill}`);
+console.log(`Your tip is: ${tipAmount.toFixed()}`);
+console.log(`Your total bill is: ${totalBill.toFixed()}`);
