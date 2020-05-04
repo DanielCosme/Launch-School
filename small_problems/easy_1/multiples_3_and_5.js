@@ -25,6 +25,6 @@ function getRange(x) {
 	return arr;
 }
 
-function isMultiple(multiple, number) {
-	return multiple % number === 0;
+function isMultiple(multipleToEvaluate, number) {
+	return multipleToEvaluate % number === 0;
 }
