@@ -23,7 +23,6 @@ console.log(isLeapYear(400)); // true
 
 function isLeapYear(year) {
 	if (year < 1752) {
-		let result;
 		return isEvenlyDivisibleBy(year, 4);
 	} else {
 		return (
