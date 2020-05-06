@@ -14,16 +14,16 @@ twice(103103); // 103103
 twice(3333); // 3333
 twice(7676); // 7676
 
-function twice(n) {
+function twice(num) {
 	// console.log( isDouble(n) ? n : n * 2);
-	return isDouble(n) ? n : n * 2;
+	return isDouble(num) ? num : num * 2;
 }
 
 function isDouble(n) {
-	let num = String(n);
-	let splitIndex = num.length / 2;
-	let firstHalf = num.slice(0, splitIndex);
-	let secondHalf = num.slice(splitIndex);
+	let numStr = String(n);
+	let splitIndex = numStr.length / 2;
+	let firstHalf = numStr.slice(0, splitIndex);
+	let secondHalf = numStr.slice(splitIndex);
 
-	return firstHalf === secondHalf && num.length % 2 === 0;
+	return firstHalf === secondHalf && numStr.length % 2 === 0;
 }
