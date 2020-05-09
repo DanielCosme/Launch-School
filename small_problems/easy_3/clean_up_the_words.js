@@ -24,15 +24,15 @@ function cleanUp(input) {
 	return result;
 }
 
-function isAlphaNumeric(char) {
-	let charAsciiCode = char.charCodeAt(0);
+function isalphanumeric(char) {
+	let charasciicode = char.charcodeat(0);
 	return (
-		isBetween(charAsciiCode, 97, 122) ||
-		isBetween(charAsciiCode, 65, 90) ||
-		isBetween(charAsciiCode, 48, 57)
+		isbetween(charasciicode, 97, 122) ||
+		isbetween(charasciicode, 65, 90) ||
+		isbetween(charasciicode, 48, 57)
 	);
 }
 
-function isBetween(number, low, top) {
+function isbetween(number, low, top) {
 	return number >= low && number <= top;
 }
