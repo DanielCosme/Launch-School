@@ -12,11 +12,16 @@ dms(0); // 0°00'00"
 dms(360); // 360°00'00" or 0°00'00"
 
 function dms(angle) {
-  let strAngle = String(angle).split(".");
-  let Degrees = strAngle[0];
-  let minutes = Number.parseFloat("." + strAngle[1]) * 60 || 00;
-  let minDiv = String(minutes).split(".")[1];
-  let seconds = minDiv === NaN ? "00" : Number(minDiv) * 60;
+  let degrees = Math.floor(angle);
 
-  console.log(`${Degrees}˚${minutes}'${seconds}"`);
+  let minutesBeforeFloor = (angle - degrees) * 60;
+  let minutes = Math.floor(minutesBeforeFloor);
+  let seconds = Math.floor((minutesBeforeFloor - minutes) * 60);
+
+  let result = `${fixZero(degrees)}˚${fixZero(minutes)}'${fixZero(seconds)}"`;
+  return result;
+}
+
+function fixZero(num) {
+  return String(num).length === 1 ? '0' + num : num;
 }
