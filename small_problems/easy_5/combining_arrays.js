@@ -22,5 +22,3 @@ function noDuplicates(resultArr, inputArr) {
   }
   return resultArr;
 }
-
-
