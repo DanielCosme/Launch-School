@@ -6,9 +6,9 @@ swapName('Joe Roberts');    // "Roberts, Joe"
 
 
 function swapName(str) {
-  let swap = str.split(" ").reverse();
-  let first = swap[0];
-  let second = swap.slice(1).join(" ");
+  let reversed = str.split(" ").reverse();
+  let first = reversed[0];
+  let second = reversed.slice(1).join(" ");
   let result = `${first}, ${second}`;
 
   // console.log(result);
