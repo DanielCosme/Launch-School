@@ -12,10 +12,10 @@ function sumOfSums(arr) {
   let result = 0;
   let sumArr = [];
 
-  for (let i = 0; i < arr.length; i++) {
-    sumArr.push(arr[i]);
+  arr.forEach(x => {
+    sumArr.push(x);
     result += sum(sumArr);
-  }
+  })
 
   return result;
 }
