@@ -15,7 +15,6 @@ function swapCase(str) {
     else ret += char.toUpperCase();
   }
 
-  console.log(ret);
   return ret;
 }
 
