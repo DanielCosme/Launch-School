@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+let input = process.argv[2];
+let hours, minutes, seconds, total, rest;
+
+if (!has('h') && !has('m')) {
+  console.log('Wrong input');
+  process.exit(1);
+}
+
+if (has('h')) {
+  let iniSplit = input.split("h");
+  hours = Number(iniSplit[0]);
+  hours = hours * 60;
+  if (input.includes('m')) {
+    let secSplit = iniSplit[1].split("m");
+    minutes = Number(secSplit[0]);
+  }
+  total = minutes ? hours + minutes : hours;
+
+} else if (has('m')) {
+  let iniSplit = input.split('m');
+  minutes = Number(iniSplit[0]);
+
+  total = minutes;
+}
+
+hours = Number(hours);
+minutes = Number(minutes);
+
+rest = Math.round(total / 5);
+
+console.log(`Rest time is ${rest} minutes`);
+
+function has(x) {
+  return input && input.includes(x);
+}
+
+console.log(input);
