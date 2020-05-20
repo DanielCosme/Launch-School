@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}/small_problems/str_to_signed_number.js"
+      "program": "${workspaceFolder}/small_problems/medium_1/fibonacci_memoization.js"
     }
   ]
 }
