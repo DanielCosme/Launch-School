@@ -101,37 +101,32 @@ function checkWinner() {
 
 function computerTurn() {
   let empty = getEmpty();
-  let position = checkDefense() || empty[random(empty.length)];
+  let rand = empty[random(empty.length)];
+  let def = checkMove(PLAYER_MARK);
+  let off = checkMove(COMPUTER_MARK);
+  let fifth = [1, 1]
+  let position = off || def || fifth || rand;
 
   updateBoard(position, COMPUTER_MARK);
 }
 
-function checkDefense() {
-  let count = 0;
-  let nonPLayer;
-  let defensivePosition;
+function checkMove(marc) {
+  let nonPlayer;
+  let move;
 
   for (let i = 0; i < POSITIONS.length; i++) {
     let winningLane = POSITIONS[i];
-    for (let j = 0; j < winningLane.length; j++) {
-      let position = winningLane[j];
-      if (getPlace(position) === PLAYER_MARK) {
-        count++;
-      } else if (getPlace(position) === EMPTY) {
-        nonPLayer = position;
-      }
-      if (count === 2 && nonPLayer) {
-        defensivePosition = nonPLayer;
+    if (winningLane.filter(x => getPlace(x) === marc).length == 2) {
+      nonPlayer = winningLane.find(x => getPlace(x) === EMPTY);
+      if (nonPlayer) {
+        move = nonPlayer;
         break;
       }
     }
-    count = 0;
-    nonPLayer = 0;
-    if (defensivePosition) break;
   }
-
-  return defensivePosition;
+  return move;
 }
+
 
 function random(num) {
   return Math.floor(Math.random() * num);
@@ -222,7 +217,7 @@ function createBoard(dimention) {
 }
 
 function displayBoard() {
-  // console.clear("");
+  console.clear("");
 
   console.log(`\nPlayer is ${PLAYER_MARK} and AI is ${COMPUTER_MARK}`);
 
