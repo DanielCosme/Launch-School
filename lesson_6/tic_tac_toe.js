@@ -19,7 +19,7 @@ while (play) {
     playerChooseSquare();
     computerTurn();
     displayBoard();
-    checkWinner();
+    whoWins();
 
     if (getEmpty().length === 0 && !gameOver) {
       gameOver = true;
@@ -37,32 +37,26 @@ function playAgain() {
   play = a[0] === 'y';
 }
 
-function checkWinner() {
-  let winner = checkHorizontal();
+function whoWins() {
+  let winner = checkWinner();
   if (winner !== 'Nobody') {
-    console.log(`${winner} wins!!`);
     gameOver = true;
-  }
-
-  winner = checkVertical();
-  if (winner !== 'Nobody') {
     console.log(`${winner} wins!!`);
-    gameOver = true;
-  }
-
-  winner = checkLateral();
-  if (winner !== 'Nobody') {
-    console.log(`${winner} wins!!`);
-    gameOver = true;
   }
 }
 
-function checkLateral() {
+function checkWinner() {
   let result = 'Nobody';
   let player, computer;
   let positions = [
     [[0, 0], [1, 1], [2, 2]],
-    [[0, 2], [1, 1], [2, 0]]
+    [[0, 2], [1, 1], [2, 0]],
+    [[0, 0], [0, 1], [0, 2]],
+    [[1, 0], [1, 1], [1, 2]],
+    [[2, 0], [2, 1], [2, 2]],
+    [[0, 0], [1, 0], [2, 0]],
+    [[0, 1], [1, 1], [2, 1]],
+    [[0, 2], [1, 2], [2, 2]]
   ]
 
   positions.forEach(x => {
@@ -72,34 +66,6 @@ function checkLateral() {
     else if (computer) result = 'Computer'
   })
 
-  return result;
-}
-
-function checkVertical() {
-  let result = 'Nobody';
-
-  for (let i = 0; i < 3; i++) {
-    let col = i;
-    let row = 0;
-    let a = gameBoard[row][col];
-    let b = gameBoard[row + 1][col];
-    let c = gameBoard[row + 2][col];
-    if (a === PLAYER_MARK && b === PLAYER_MARK && c === PLAYER_MARK) result = "Player";
-    else if (a === COMPUTER_MARK && b === COMPUTER_MARK && c === COMPUTER_MARK) result = "Computer";
-    // console.log(`a ${a} b ${b} c ${c}`);
-  }
-  return result;
-}
-
-function checkHorizontal() {
-  let result = 'Nobody'
-  let player, computer;
-  gameBoard.forEach(x => {
-    player = x.every(x => x === PLAYER_MARK);
-    computer = x.every(x => x === COMPUTER_MARK);
-    if (player) result = 'Player';
-    else if (computer) result = 'Computer';
-  })
   return result;
 }
 
@@ -203,8 +169,7 @@ function displayBoard() {
 
   console.log(`\nPlayer is ${PLAYER_MARK} and AI is ${COMPUTER_MARK}\n`);
 
-  console.log(EMPTY.repeat(3) + ' 0 ' + EMPTY + ' 1 ' + EMPTY + ' 2 ')
-  console.log("");
+  console.log(EMPTY.repeat(3) + ' 0 ' + EMPTY + ' 1 ' + EMPTY + ' 2 \n')
   console.log('a' + getRow('v', gameBoard[0]));
   console.log(EMPTY + getRow());
   console.log('b' + getRow('v', gameBoard[1]));
