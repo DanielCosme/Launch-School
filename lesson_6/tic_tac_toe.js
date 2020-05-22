@@ -9,6 +9,7 @@ const COMPUTER_MARK = 'O';
 let gameBoard = createBoard(3);
 let gameOver = false;
 let play = true;
+let score = { player: 0, computer: 0 };
 
 while (play) {
 
@@ -20,10 +21,12 @@ while (play) {
     computerTurn();
     displayBoard();
     whoWins();
+    checkScore();
 
     if (getEmpty().length === 0 && !gameOver) {
-      gameOver = true;
+      gameBoard = createBoard(3);
       console.log('Board Full It\'s a tie!');
+      readline.question("Press any key con continue");
     }
 
   } while (!gameOver)
@@ -32,16 +35,34 @@ while (play) {
 
 }
 
+function checkScore() {
+  let res;
+  if (score.player >= 5) res = "Player";
+  else if (score.computer >= 5) res = "Computer";
+  if (res) {
+    console.log(`${res} Wins the match!`)
+    gameOver = true;
+  }
+}
+
+function reset() {
+  gameBoard = createBoard(3);
+  score.player = 0;
+  score.computer = 0;
+}
+
 function playAgain() {
   let a = readline.question("Do you wan't to play again? (y/n) ");
+  reset();
   play = a[0] === 'y';
 }
 
 function whoWins() {
   let winner = checkWinner();
   if (winner !== 'Nobody') {
-    gameOver = true;
-    console.log(`${winner} wins!!`);
+    gameBoard = createBoard(3);
+    console.log(`${winner} Wins!!`);
+    readline.question("Press any key to continue");
   }
 }
 
@@ -62,8 +83,13 @@ function checkWinner() {
   positions.forEach(x => {
     player = x.every(x => getPlace(x) === PLAYER_MARK);
     computer = x.every(x => getPlace(x) === COMPUTER_MARK);
-    if (player) result = 'Player';
-    else if (computer) result = 'Computer'
+    if (player) {
+      result = 'Player';
+      score.player += 1;
+    } else if (computer) {
+      result = 'Computer'
+      score.computer += 1;
+    }
   })
 
   return result;
@@ -167,7 +193,9 @@ function createBoard(dimention) {
 function displayBoard() {
   console.clear("");
 
-  console.log(`\nPlayer is ${PLAYER_MARK} and AI is ${COMPUTER_MARK}\n`);
+  console.log(`\nPlayer is ${PLAYER_MARK} and AI is ${COMPUTER_MARK}`);
+
+  console.log(`\nPlayer: ${score.player} Computer: ${score.computer}\n`);
 
   console.log(EMPTY.repeat(3) + ' 0 ' + EMPTY + ' 1 ' + EMPTY + ' 2 \n')
   console.log('a' + getRow('v', gameBoard[0]));
