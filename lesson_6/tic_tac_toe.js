@@ -5,6 +5,16 @@ const H = '---';
 const V = ' | '
 const PLAYER_MARK = 'X';
 const COMPUTER_MARK = 'O';
+const POSITIONS = [
+  [[0, 0], [1, 1], [2, 2]],
+  [[0, 2], [1, 1], [2, 0]],
+  [[0, 0], [0, 1], [0, 2]],
+  [[1, 0], [1, 1], [1, 2]],
+  [[2, 0], [2, 1], [2, 2]],
+  [[0, 0], [1, 0], [2, 0]],
+  [[0, 1], [1, 1], [2, 1]],
+  [[0, 2], [1, 2], [2, 2]]
+]
 
 let gameBoard = createBoard(3);
 let gameOver = false;
@@ -69,37 +79,58 @@ function whoWins() {
 function checkWinner() {
   let result = 'Nobody';
   let player, computer;
-  let positions = [
-    [[0, 0], [1, 1], [2, 2]],
-    [[0, 2], [1, 1], [2, 0]],
-    [[0, 0], [0, 1], [0, 2]],
-    [[1, 0], [1, 1], [1, 2]],
-    [[2, 0], [2, 1], [2, 2]],
-    [[0, 0], [1, 0], [2, 0]],
-    [[0, 1], [1, 1], [2, 1]],
-    [[0, 2], [1, 2], [2, 2]]
-  ]
 
-  positions.forEach(x => {
-    player = x.every(x => getPlace(x) === PLAYER_MARK);
-    computer = x.every(x => getPlace(x) === COMPUTER_MARK);
+  for (let i = 0; i < POSITIONS.length; i++) {
+    let position = POSITIONS[i];
+
+    player = position.every(x => getPlace(x) === PLAYER_MARK);
+    computer = position.every(x => getPlace(x) === COMPUTER_MARK);
     if (player) {
       result = 'Player';
       score.player += 1;
+      break;
     } else if (computer) {
       result = 'Computer'
       score.computer += 1;
+      break;
     }
-  })
+  }
 
   return result;
 }
 
 function computerTurn() {
   let empty = getEmpty();
-  let position = empty[random(empty.length)];
+  let position = checkDefense() || empty[random(empty.length)];
 
   updateBoard(position, COMPUTER_MARK);
+}
+
+function checkDefense() {
+  let count = 0;
+  let nonPLayer;
+  let defensivePosition;
+
+  for (let i = 0; i < POSITIONS.length; i++) {
+    let winningLane = POSITIONS[i];
+    for (let j = 0; j < winningLane.length; j++) {
+      let position = winningLane[j];
+      if (getPlace(position) === PLAYER_MARK) {
+        count++;
+      } else if (getPlace(position) === EMPTY) {
+        nonPLayer = position;
+      }
+      if (count === 2 && nonPLayer) {
+        defensivePosition = nonPLayer;
+        break;
+      }
+    }
+    count = 0;
+    nonPLayer = 0;
+    if (defensivePosition) break;
+  }
+
+  return defensivePosition;
 }
 
 function random(num) {
@@ -191,7 +222,7 @@ function createBoard(dimention) {
 }
 
 function displayBoard() {
-  console.clear("");
+  // console.clear("");
 
   console.log(`\nPlayer is ${PLAYER_MARK} and AI is ${COMPUTER_MARK}`);
 
