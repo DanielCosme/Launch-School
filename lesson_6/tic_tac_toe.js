@@ -16,21 +16,31 @@ const POSITIONS = [
   [[0, 2], [1, 2], [2, 2]]
 ]
 
+const PLAYER = "Player";
+const COMPUTER = "Computer";
+const CHOICE = "Choice"
+let first = PLAYER;
+
 let gameBoard = createBoard(3);
 let gameOver = false;
 let play = true;
 let score = { player: 0, computer: 0 };
+let currentPlayer = first;
 
 while (play) {
 
   gameBoard = createBoard(3);
   gameOver = false;
+
+  chooseFirst(first);
+
   do {
+
     displayBoard();
-    playerChooseSquare();
-    computerTurn();
+    playSquare(currentPlayer);
     displayBoard();
-    whoWins();
+
+    whoWins(currentPlayer);
     checkScore();
 
     if (getEmpty().length === 0 && !gameOver) {
@@ -45,10 +55,33 @@ while (play) {
 
 }
 
+function chooseFirst(first) {
+  if (first === CHOICE) {
+    let option = readline.question("Who goes first? (p/c)");
+    while (!['p', 'c'].includes(option) && option.length > 1) {
+      console.log("Invalid input");
+      option = readline.question("Who goes first? (p/c)");
+    }
+    currentPlayer = option === 'p' ? PLAYER : COMPUTER;
+  }
+}
+
+function playSquare(player) {
+  if (player === PLAYER) {
+    playerChooseSquare();
+  } else if (player === COMPUTER) {
+    computerChooseSquare();
+  }
+}
+
+function alternatePlayer(player) {
+  return player === PLAYER ? COMPUTER : PLAYER;
+}
+
 function checkScore() {
   let res;
-  if (score.player >= 5) res = "Player";
-  else if (score.computer >= 5) res = "Computer";
+  if (score.player >= 5) res = PLAYER;
+  else if (score.computer >= 5) res = COMPUTER;
   if (res) {
     console.log(`${res} Wins the match!`)
     gameOver = true;
@@ -63,35 +96,38 @@ function reset() {
 
 function playAgain() {
   let a = readline.question("Do you wan't to play again? (y/n) ");
+  while (!['y', 'n'].includes(a.toLowerCase()) && a.length > 1) {
+    console.log('Wrong input');
+    a = readline.question("Do you wan't to play again? (y/n) ");
+  }
   reset();
   play = a[0] === 'y';
 }
 
-function whoWins() {
-  let winner = checkWinner();
+function whoWins(player) {
+  let winner = checkWinner(player);
   if (winner !== 'Nobody') {
     gameBoard = createBoard(3);
     console.log(`${winner} Wins!!`);
+    currentPlayer = first;
     readline.question("Press any key to continue");
+  } else {
+    currentPlayer = alternatePlayer(currentPlayer);
   }
 }
 
-function checkWinner() {
+function checkWinner(play) {
   let result = 'Nobody';
-  let player, computer;
+  let player;
+  let mark = play === PLAYER ? PLAYER_MARK : COMPUTER_MARK;
 
   for (let i = 0; i < POSITIONS.length; i++) {
     let position = POSITIONS[i];
 
-    player = position.every(x => getPlace(x) === PLAYER_MARK);
-    computer = position.every(x => getPlace(x) === COMPUTER_MARK);
+    player = position.every(x => getPlace(x) === mark);
     if (player) {
-      result = 'Player';
-      score.player += 1;
-      break;
-    } else if (computer) {
-      result = 'Computer'
-      score.computer += 1;
+      result = play;
+      score[play.toLowerCase()] += 1;
       break;
     }
   }
@@ -99,12 +135,12 @@ function checkWinner() {
   return result;
 }
 
-function computerTurn() {
+function computerChooseSquare() {
   let empty = getEmpty();
   let rand = empty[random(empty.length)];
   let def = checkMove(PLAYER_MARK);
   let off = checkMove(COMPUTER_MARK);
-  let fifth = [1, 1]
+  let fifth = getPlace([1, 1]) === EMPTY ? [1, 1] : false;
   let position = off || def || fifth || rand;
 
   updateBoard(position, COMPUTER_MARK);
