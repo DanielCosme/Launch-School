@@ -1,8 +1,8 @@
 const readline = require('readline-sync');
 
-const EMPTY = " "
-const H = '---';
-const V = ' | '
+const EMPTY = " ";
+const HORIZONTAL = '---';
+const VERTICAL = ' | ';
 const PLAYER_MARK = 'X';
 const COMPUTER_MARK = 'O';
 const POSITIONS = [
@@ -14,13 +14,13 @@ const POSITIONS = [
   [[0, 0], [1, 0], [2, 0]],
   [[0, 1], [1, 1], [2, 1]],
   [[0, 2], [1, 2], [2, 2]]
-]
+];
 
 const PLAYER = "Player";
 const COMPUTER = "Computer";
-const CHOICE = "Choice"
-let first = PLAYER;
+const CHOICE = "Choice";
 
+let first = PLAYER;
 let gameBoard = createBoard(3);
 let gameOver = false;
 let play = true;
@@ -49,7 +49,7 @@ while (play) {
       readline.question("Press any key con continue");
     }
 
-  } while (!gameOver)
+  } while (!gameOver);
 
   playAgain();
 
@@ -83,7 +83,7 @@ function checkScore() {
   if (score.player >= 5) res = PLAYER;
   else if (score.computer >= 5) res = COMPUTER;
   if (res) {
-    console.log(`${res} Wins the match!`)
+    console.log(`${res} Wins the match!`);
     gameOver = true;
   }
 }
@@ -152,7 +152,7 @@ function checkMove(marc) {
 
   for (let i = 0; i < POSITIONS.length; i++) {
     let winningLane = POSITIONS[i];
-    if (winningLane.filter(x => getPlace(x) === marc).length == 2) {
+    if (winningLane.filter(x => getPlace(x) === marc).length === 2) {
       nonPlayer = winningLane.find(x => getPlace(x) === EMPTY);
       if (nonPlayer) {
         move = nonPlayer;
@@ -188,7 +188,7 @@ function getPlayerInput() {
     if (!hasLetter(input[0])) console.log("Invalid letter");
     if (!hasValidNumber(input[1])) console.log("Invalid number");
 
-  } while (invalidInput(input))
+  } while (invalidInput(input));
 
   input = input.split("");
   input[0] = map[input[0]];
@@ -235,7 +235,7 @@ function getEmpty() {
 
 function updateBoard(move, sign) {
   if (getEmpty().length === 0) return;
-  let row = move[0]
+  let row = move[0];
   let col = move[1];
   gameBoard[row][col] = sign;
 }
@@ -243,11 +243,11 @@ function updateBoard(move, sign) {
 function createBoard(dimention) {
   let board = [];
   for (let i = 0; i < dimention; i++) {
-    let tmp = []
+    let tmp = [];
     for (let j = 0; j < dimention; j++) {
       tmp.push(EMPTY);
     }
-    board.push(tmp)
+    board.push(tmp);
   }
   return board;
 }
@@ -259,7 +259,7 @@ function displayBoard() {
 
   console.log(`\nPlayer: ${score.player} Computer: ${score.computer}\n`);
 
-  console.log(EMPTY.repeat(3) + ' 0 ' + EMPTY + ' 1 ' + EMPTY + ' 2 \n')
+  console.log(EMPTY.repeat(3) + ' 0 ' + EMPTY + ' 1 ' + EMPTY + ' 2 \n');
   console.log('a' + getRow('v', gameBoard[0]));
   console.log(EMPTY + getRow());
   console.log('b' + getRow('v', gameBoard[1]));
@@ -270,8 +270,9 @@ function displayBoard() {
 
 function getRow(lineOrientation, arr) {
   if (lineOrientation === 'v') {
-    return EMPTY.repeat(3) + arr[0] + V + arr[1] + V + arr[2];
+    return EMPTY.repeat(3) + arr[0] + VERTICAL + arr[1] + VERTICAL + arr[2];
   } else {
-    return EMPTY.repeat(2) + H + EMPTY + H + EMPTY + H + EMPTY;
+    return (EMPTY.repeat(2) + HORIZONTAL + EMPTY + HORIZONTAL +
+      EMPTY + HORIZONTAL + EMPTY);
   }
 }
