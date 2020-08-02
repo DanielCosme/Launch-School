@@ -9,7 +9,6 @@ A 3x3 matrix can be represented by an array of arrays: an outer array containing
 is represented by the following array of arrays:
 */
 
-
 let matrix = [
   [1, 5, 8],
   [4, 7, 2],
@@ -30,7 +29,16 @@ function transpose(matrix) {
   return ret;
 }
 
-let newMatrix = transpose(matrix);
+function transposeInPlace(a) {
+  for (let i = 0; i < 3 ; i++) {
+    for (let j = i + 1 ; j < 3 ; j++) {
+      [a[i][j], a[j][i]] = [a[j][i], a[i][j]];
+    }
+  }
+  return matrix;
+}
+
+let newMatrix = transposeInPlace(matrix);
 
 console.log(newMatrix);      // [[1, 4, 3], [5, 7, 9], [8, 2, 6]]
 console.log(matrix);         // [[1, 5, 8], [4, 7, 2], [3, 9, 6]]
