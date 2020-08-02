@@ -18,5 +18,8 @@
   "homepage": "https://github.com/DanielCosme/Launch-School-JS-101#readme",
   "dependencies": {
     "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "eslint": "^7.6.0"
   }
 }
