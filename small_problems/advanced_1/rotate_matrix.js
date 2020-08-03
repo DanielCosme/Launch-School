@@ -26,11 +26,12 @@ function rotate90(matrix) {
   }
   
   for (let i = matrix.length -1 ; i >= 0 ; i--) {
+    let row = matrix[i];
     let k = 0;
 
     for (let j = 0 ; j < len ; j++) {
-      let sent = matrix[i][j];
-      ret[k].push(sent);
+      let element = row[j];
+      ret[k].push(element);
       k++;
     }
   }
