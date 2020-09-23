@@ -11,7 +11,7 @@ console.log(binarySearch(['Alice', 'Bonnie', 'Kim', 'Pete', 'Rachel', 'Sue', 'Ty
 
 function binarySearch(arr, toSearch) {
   let left = 0;
-  let right = arr.length -1;
+  let right = arr.length - 1;
 
   while (left <= right) {
     let mid = Math.floor((left + right) / 2);
@@ -20,6 +20,7 @@ function binarySearch(arr, toSearch) {
     else if (toSearch < arr[mid]) right = mid - 1;
     else left = mid + 1;
   }
-  
+
   return -1;
 }
+

@@ -18,7 +18,6 @@ function maxRotation(number) {
     rotator = rotateRightmostDigits(rotator, i);
   }
 
-  // console.log(rotator);
   return rotator;
 }
 
@@ -32,3 +31,4 @@ function rotateRightmostDigits(number, index) {
   // console.log(result);
   return result;
 }
+

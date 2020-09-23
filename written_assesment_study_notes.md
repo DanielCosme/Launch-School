@@ -14,7 +14,7 @@ variable bar.
 
 The `==` and the `===` operators are of type *comparison*, this operations are
 used on it's operands to determine equality. The `==` operator has a slightly
-different behaviour than `===` one. The former is the non-strict equality
+different behavior than `===` one. The former is the non-strict equality
 operator, it does implicit type coercion on one of its operands to the same type
 of the other one and then does an equality comparison. The latter `===` is the
 strict equality operator which checks for value and type equality on its 
@@ -26,6 +26,15 @@ How variables interact with function definition and blocks.
 Variable scope is all  about determining if a variable is available for
 use/access
 in the current execution context of a program.
+
+#### Global Scope
+Generally speaking global scope means that a variable will be accessible from anywhere in the program.
+Although, global scope has different connotations depending on the runtime environment. In Node.js variables only have global scope in the current module, as opposed to the DOM on the browser in which a global variable is accessible from anywhere.
+
+#### Local Scope
+
+##### block scope
+##### function scope
 
 The are variables that can have global scope, meaning they can be accessed from 
 anywhere in the scope chain. The `const` and `let` keywords give local scope to 
@@ -39,7 +48,7 @@ Concepts like lower scope and upper scope are related to code blocks that are
 up or low in the stack or execution context chain. these concepts are also 
 referred to as the scope chain.
 
-Ultimately, variables declared lower in the scope can not be accessed by the 
+
 code in the current block, in contrast, variables in the higher scope can be
 accessed by code in the current block.
 
@@ -51,6 +60,8 @@ language, like custom ones.
 
 Primitive values are called atomic values, they are immutable and indivisible.
 Their values can be reassigned in variables, but they don't change.
+
+Any operation performed on a primitive value returns a new primitive value.
 
 Types are how we differentiate primitive values.
 
@@ -83,7 +94,7 @@ coerce the string to a number, and because it will be converted form `'15'` to
 `15`, the console will print `'equal'`.
 
 Explicit type conversion is when the programmer decides when and to what type 
-to do the conversion to. The expected behaviour is expressed directly in the 
+to do the conversion to. The expected behavior is expressed directly in the 
 code. `ParseInt('str')` Will return the value `15` as the `str` variable was 
 explicitly converted from a string to a number.
 
@@ -108,10 +119,14 @@ passed on, meaning that this object can be mutated inside of a function.
 Important string methods.
 |Method Name | What it does |
 | ---        | ---          |
-|`str.split()` | It will split the string by the provided separator and return its elements as an array.|
-| `str.splice()`| It will return a new string by the provided indexes (beginning, end). |
-| `str.`| to be added...|
-| `str.`| |
+|`str.split(<separator>)` | It will split the string by the provided separator and return its elements as an array.|
+| `str.splice()`| It will return a new string by the provided indexes (beginning, end).|
+| `str.concat(<string>)`|Join two strings together.|
+| `str.includes(<string>)`|Returns true if the string provided exist within the string.|
+| `str.trim()`|Remove white space from both ends of the string.|
+| `str.chatAt(<index>)`|Acts like accessing an element in an array with brackets. Returns character at the index of the string.|
+| `str.`||
+| `str.`||
  
 #### Objects 
 Object Methods. How to access keys and values in an Object as an array.
@@ -120,6 +135,7 @@ Object Methods. How to access keys and values in an Object as an array.
 |`Object.values()`|Gets all the values of the object and returns them as an array.|
 | `Object.keys()`|Gets all the keys of the object and returns them as an array.|
 | `Object.entries()`|Gets all the [key, value] pairs if the object as an array.|
+| `Object.asign(<objA> , <ObjB>)`|Merge object B into Object A, the A object is mutated the Object B is not.|
 
 #### Arrays 
 Array iteration methods like
@@ -166,7 +182,7 @@ be reflected outside of the function scope.
 In JavaScript all values can be evaluated in a boolean context, truthiness is a 
 word meant to differentiate the type of values being evaluated in such context. 
 
-All values that are of the type `boolean` can be `true` or `false`, therefore 
+All values that are of the type `boolean` can be `true` or `false`, therefore we
 refer to them as such. 
 
 Any other value that is not of type `boolean` will be called `truthy` or `falsy`
@@ -180,7 +196,7 @@ called falsy:
 - null
 - undefined
 - NaN
-- [] (empty array??) not sure.
+- false
 
 The rest of values that are not of type boolean and evaluate to `true` are considered truthy.
 
@@ -257,13 +273,49 @@ parameters and after that, the arrow `=>`.
 };
 ```
 ### Implicit return value of function invocations
-All function invocations return something. If no return value is provided in the body during the
-definition JavaScript will implicitly return `undefined`.
+All function invocations return something. 
+If no return value is provided in the body of the function during the definition JavaScript will implicitly 
+return `undefined`.
 
 ### First class functions
-Also higher order functions
+The main characteristic of these functions is that they can be passed into other functions, be returned by
+other functions and passed around as values saved in variables.
 
-### Side-effects ans pure functions
+Higher order functions are functions that can take other functions as arguments, and return them. All higher
+order functions are first class functions, but not all first class functions are higher order functions.
+
+### Side-effects and pure functions
+Side-effects refers to what happens in the body of a function.
+Side-effects refers to the mutation of the arguments passed into a function invocation.
+
+Pure functions are the ones that never mutate its arguments and also are deterministic, meaning, they will always return the same output out of the same input.
 
 ### Naming conventions
+Js community has stylistic guidelines to make JS code easier to read and write.
 Legal vs idiomatic
+
+#### Legal
+Variable names should always start with a letter or symbol, anything that is not a letter or a symbol is considered illegal and the runtime with show a syntax error. Number for example are not allowed as the beginning of a variable or function name.
+
+After first character the variable can have any kind of symbol, but that does not meant that it should.
+
+#### Idiomatic
+Idiomatic names refer to naming conventions that conform to certain style guides or best practices.
+
+All name should use alphabetic and numeric characters only.
+
+In JavaScript the `camelCase` naming convention is used for naming variables and functions. 
+```javascript
+let myFirstVariable = 1;
+
+function myFirstFunction() {
+  // do something 
+};
+```
+For constant values we use `SCREAMING_SNAKE_CASE`.
+
+
+
+
+
+

@@ -7,8 +7,7 @@ Memoization is an approach that involves saving a computed answer for future reu
 For this exercise, your objective is to refactor the recursive fibonacci function to use memoization.
 */
 
-let table = {
-};
+let table = {};
 
 function fibonacci(x) {
   if (x <= 2) return 1;
