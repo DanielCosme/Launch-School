@@ -58,19 +58,9 @@ function longestSentence(text) {
 }
 
 function wordCount(sentence) {
-  // how does a word starts ---> any character but (whiteSpace, tab, endOfsentence)
-  // how does a word end? ---> whiteSpace, tab, endOfSentence.
-  let count = 0;
-  
-  for (let idx = 0 ; idx < sentence.length ; idx++) {
-    let currentChar = sentence[idx];
-
-    if (currentChar === ' ' || isEndOfSentence(currentChar)) {
-      count++;
-    }
-  }
-
-  return count;
+  return sentence.split('').reduce((count, curr) => {
+    return (curr === ' ' || isEndOfSentence(curr)) ? ++count : count;
+  }, 0);
 }
 
 function isEndOfSentence(char) {
